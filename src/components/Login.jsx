@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 
-<<<<<<< HEAD
- function Login({ onLogin }) {
-=======
 export default function Login({ onLogin }) {
->>>>>>> 60f6836 (Add Login component logic with state and submit handler)
   const [username, setUsername] = useState('');
 
   const handleSubmit = (e) => {
@@ -12,11 +8,7 @@ export default function Login({ onLogin }) {
     if (username.trim()) {
       onLogin(username.trim());
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7ffa9af (Setup Login component logic and input styling)
-  };
+    };
 
   const inputStyle = {
     width: '100%',
@@ -27,7 +19,6 @@ export default function Login({ onLogin }) {
     borderRadius: '0.3rem',
     color: '#fff',
     boxSizing: 'border-box',
-<<<<<<< HEAD
   };
 
   return (
@@ -50,10 +41,3 @@ export default function Login({ onLogin }) {
     </div>
   );
 }
-export default Login;
-=======
-  }
->>>>>>> 60f6836 (Add Login component logic with state and submit handler)
-=======
-  };
->>>>>>> 7ffa9af (Setup Login component logic and input styling)
