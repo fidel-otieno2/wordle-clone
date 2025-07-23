@@ -13,6 +13,9 @@ export default function Login({ onLogin }) {
       onLogin(username.trim());
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7ffa9af (Setup Login component logic and input styling)
   };
 
   const inputStyle = {
@@ -24,6 +27,7 @@ export default function Login({ onLogin }) {
     borderRadius: '0.3rem',
     color: '#fff',
     boxSizing: 'border-box',
+<<<<<<< HEAD
   };
 
   return (
@@ -50,3 +54,6 @@ export default Login;
 =======
   }
 >>>>>>> 60f6836 (Add Login component logic with state and submit handler)
+=======
+  };
+>>>>>>> 7ffa9af (Setup Login component logic and input styling)
