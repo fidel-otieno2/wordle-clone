@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
+<<<<<<< HEAD
  function Login({ onLogin }) {
+=======
+export default function Login({ onLogin }) {
+>>>>>>> 60f6836 (Add Login component logic with state and submit handler)
   const [username, setUsername] = useState('');
 
   const handleSubmit = (e) => {
@@ -8,6 +12,7 @@ import React, { useState } from 'react';
     if (username.trim()) {
       onLogin(username.trim());
     }
+<<<<<<< HEAD
   };
 
   const inputStyle = {
@@ -42,3 +47,6 @@ import React, { useState } from 'react';
   );
 }
 export default Login;
+=======
+  }
+>>>>>>> 60f6836 (Add Login component logic with state and submit handler)
