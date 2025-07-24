@@ -1,0 +1,62 @@
+.tile {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  background-color: hsl(118, 91%, 25%);
+  border: 2px solid #3a3a3c;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  user-select: none;
+  animation: pop 0.25s ease-in-out;
+}
+
+/* Tile animation */
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Correct (green) */
+.tile.correct {
+  background-color: #538d4e;
+  border-color: #538d4e;
+}
+
+/* Present (yellow) */
+.tile.present {
+  background-color: #b59f3b;
+  border-color: #b59f3b;
+}
+
+/* Absent (gray) */
+.tile.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+}
+
+/* Empty tile border */
+.tile:empty {
+  border-color: #3a3a3c;
+}
+
+/* Responsive scaling */
+@media (max-width: 500px) {
+  .tile {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+}
