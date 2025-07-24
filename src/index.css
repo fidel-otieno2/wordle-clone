@@ -2,15 +2,10 @@
   font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-<<<<<<< HEAD
-  color-scheme: dark;
-  color: #f0f8ff;
-=======
 
   color-scheme: dark;
   color: #f0f8ff;
 
->>>>>>> 16dad20 (implement base layout, theme, and UI elements)
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -30,22 +25,6 @@ body {
 }
 
 @keyframes rainbowFlow {
-<<<<<<< HEAD
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@media (prefers-color-scheme: light) {
-  :root { color: #222; }
-
-  body {
-    background: linear-gradient(-45deg, #ffecd2, #fcb69f, #a18cd1, #fbc2eb);
-    background-size: 400% 400%;
-    animation: rainbowFlow 15s ease infinite;
-  }
-}
-=======
   0% {
     background-position: 0% 50%;
   }
@@ -57,7 +36,6 @@ body {
   }
 }
 
->>>>>>> 16dad20 (implement base layout, theme, and UI elements)
 #root {
   width: 100%;
   max-width: 600px;
@@ -102,28 +80,18 @@ button {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 16dad20 (implement base layout, theme, and UI elements)
 button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 16dad20 (implement base layout, theme, and UI elements)
 button:focus,
 button:focus-visible {
   outline: 3px solid #ffda77;
   outline-offset: 2px;
 }
 
-<<<<<<< HEAD
-@media (prefers-color-scheme: light) {
-  h1 { color: #ff4081; }
-=======
 /* Light mode fallback */
 @media (prefers-color-scheme: light) {
   :root {
@@ -140,21 +108,15 @@ button:focus-visible {
     color: #ff4081;
   }
 
->>>>>>> 16dad20 (implement base layout, theme, and UI elements)
   button {
     background: linear-gradient(to right, #a1c4fd, #c2e9fb);
     color: #111;
   }
-<<<<<<< HEAD
-=======
 
->>>>>>> 16dad20 (implement base layout, theme, and UI elements)
   button:hover {
     transform: scale(1.02);
   }
 }
-<<<<<<< HEAD
-
 .tile {
   width: 60px;
   height: 60px;
@@ -172,31 +134,56 @@ button:focus-visible {
   user-select: none;
   animation: pop 0.25s ease-in-out;
 }
+@keyframes pop {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
 .tile:hover {
   transform: scale(1.05);
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
 }
-@keyframes pop {
-  0% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.8; }
-}
-
 @keyframes rainbow-border {
-  0% { border-color: #ff6ec4; }
-  16% { border-color: #7873f5; }
-  33% { border-color: #67d6ff; }
-  50% { border-color: #ffc93c; }
-  66% { border-color: #ff6ec4; }
-  83% { border-color: #7873f5; }
-  100% { border-color: #67d6ff; }
+  0% {
+    border-color: #ff6ec4;
+  }
+  16% {
+    border-color: #7873f5;
+  }
+  33% {
+    border-color: #67d6ff;
+  }
+  50% {
+    border-color: #ffc93c;
+  }
+  66% {
+    border-color: #ff6ec4;
+  }
+  83% {
+    border-color: #7873f5;
+  }
+  100% {
+    border-color: #67d6ff;
+  }
 }
-
 @keyframes twinkle {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
 }
-
 .board::before, .board::after {
   content: '';
   position: absolute;
@@ -208,6 +195,3 @@ button:focus-visible {
   border-radius: 1rem;
   animation: rainbow-border 6s linear infinite;
 }
-
-=======
->>>>>>> 16dad20 (implement base layout, theme, and UI elements)
