@@ -1,10 +1,16 @@
+import React from 'react';
 import Tile from './Tile';
 import '../styles/WordleBoard.css';
 
 function WordleBoard({ guesses, currentGuess, solution }) {
-  const filledRows = [...guesses, currentGuess];
-  const emptyRows = Array(6 - filledRows.length).fill('');
-  const rows = [...filledRows, ...emptyRows].slice(0, 6); // Always 6 rows
+  const maxRows = 6;
+
+  // Only add current guess if game is still in progress
+  const filledRows = [...guesses];
+  if (guesses.length < maxRows) filledRows.push(currentGuess);
+
+  const emptyRows = Array(maxRows - filledRows.length).fill('');
+  const rows = [...filledRows, ...emptyRows].slice(0, maxRows); // Always 6 rows
 
   return (
     <div className="board">
@@ -23,9 +29,9 @@ function WordleBoard({ guesses, currentGuess, solution }) {
   );
 }
 
-// Determines the status of each tile in a guess
+// Determines tile color for each letter
 function getStatus(word, idx, solution, isSubmitted) {
-  if (!isSubmitted) return '';
+  if (!isSubmitted || !word) return '';
 
   word = word.toUpperCase();
   solution = solution.toUpperCase();
@@ -35,7 +41,7 @@ function getStatus(word, idx, solution, isSubmitted) {
   const statusArr = Array(5).fill('absent');
   const solUsed = Array(5).fill(false);
 
-  // Pass 1: Mark correct letters
+  // 1st pass: check for correct letters
   for (let i = 0; i < 5; i++) {
     if (guessArr[i] === solArr[i]) {
       statusArr[i] = 'correct';
@@ -43,7 +49,7 @@ function getStatus(word, idx, solution, isSubmitted) {
     }
   }
 
-  // Pass 2: Mark present letters
+  // 2nd pass: check for present letters
   for (let i = 0; i < 5; i++) {
     if (statusArr[i] === 'correct') continue;
     for (let j = 0; j < 5; j++) {

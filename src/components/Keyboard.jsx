@@ -1,3 +1,4 @@
+import React from 'react';
 import "../styles/Keyboard.css";
 
 const KEYS = [
@@ -5,34 +6,47 @@ const KEYS = [
   ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
   ["Enter", "Z", "X", "C", "V", "B", "N", "M", "Del"],
 ];
+
+// Determine key status from guesses
 function getKeyStatus(guesses, solution) {
   const status = {};
 
-  guesses.forEach((word) => {
-    const guessArr = word.split("");
-    const solArr = solution.split("");
+  guesses.forEach((guess) => {
+    const guessArr = guess.toUpperCase().split("");
+    const solArr = solution.toUpperCase().split("");
     const solUsed = Array(5).fill(false);
+
+    // First pass: correct letters
     for (let i = 0; i < 5; i++) {
       if (guessArr[i] === solArr[i]) {
         status[guessArr[i]] = "correct";
         solUsed[i] = true;
       }
     }
-    for (let i = 0; i < 5; i++) {
-      if (status[guessArr[i]] === "correct") continue;
 
+    // Second pass: present or absent
+    for (let i = 0; i < 5; i++) {
+      const letter = guessArr[i];
+      if (status[letter] === "correct") continue;
+
+      let found = false;
       for (let j = 0; j < 5; j++) {
-        if (!solUsed[j] && guessArr[i] === solArr[j]) {
-          if (status[guessArr[i]] !== "correct") {
-            status[guessArr[i]] = "present";
-          }
+        if (!solUsed[j] && letter === solArr[j]) {
+          found = true;
           solUsed[j] = true;
           break;
         }
       }
 
-      if (!status[guessArr[i]]) {
-        status[guessArr[i]] = "absent";
+      if (found) {
+        // Only upgrade to present if it's not already correct
+        if (status[letter] !== "correct") {
+          status[letter] = "present";
+        }
+      } else {
+        if (!status[letter]) {
+          status[letter] = "absent";
+        }
       }
     }
   });
@@ -48,19 +62,20 @@ function Keyboard({ onChar, onDelete, onEnter, guesses, solution }) {
       {KEYS.map((row, rowIndex) => (
         <div className="keyboard-row" key={rowIndex}>
           {row.map((key) => {
-            const lowerKey = key.toUpperCase();
-            const status = keyStatus[lowerKey] || "";
+            const upperKey = key.toUpperCase();
+            const status = keyStatus[upperKey] || "";
+            const isSpecial = key === "Enter" || key === "Del";
 
             const handleClick = () => {
               if (key === "Enter") onEnter();
               else if (key === "Del") onDelete();
-              else onChar(key);
+              else onChar(upperKey);
             };
 
             return (
               <button
                 key={key}
-                className={`key ${status.toLowerCase()}`}
+                className={`key ${status.toLowerCase()} ${isSpecial ? 'special' : ''}`}
                 onClick={handleClick}
                 aria-label={`Key ${key}`}
               >

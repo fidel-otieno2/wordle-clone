@@ -1,4 +1,4 @@
-const WORD_LIST = [
+export const WORD_LIST = [
   'REACT', 'APPLE', 'CRANE', 'BRAVE', 'PLANT', 'WORLD', 'GUESS', 'ALLEY', 'LEMON', 'MOUSE', 'SHEET', 
   'SWEET', 'SLEEP', 'SHEEP', 'SNAKE', 'PLATE', 'GRAPE', 'SHARE', 'SHAPE', 'SHINE', 'SHORE', 'SHOVE', 
   'SHOOT', 'SHOUT', 'SHRUB', 'SHRUG', 'SHUSH', 'SHYLY', 'SKATE', 'SKILL', 'SKIMP', 'SKIRT', 'SKULL', 
@@ -111,4 +111,4 @@ const WORD_LIST = [
     'ZOOEA', 'ZOOEY', 'ZOOID', 'ZOOKS', 'ZOOMS', 'ZOONS', 'ZOOTY', 'ZOPPA', 'ZOPPO', 'ZORIL', 'ZORIS', 
     'ZORRO', 'ZOUKS', 'ZOWIE', 'ZUZIM', 'ZYGAL', 'ZYGON', 'ZYMES', 'ZYMIC'
 ];
-export default WORD_LIST;
+

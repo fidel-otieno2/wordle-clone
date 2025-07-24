@@ -1,15 +1,14 @@
+import React, { useState, useEffect, useRef } from 'react';
 import './styles/App.css';
 import WordleBoard from './components/WordleBoard';
 import Keyboard from './components/Keyboard';
 import Landing from './components/Landing';
 import Ending from './components/Ending';
 import Login from './components/Login';
-import { useState, useEffect, useRef } from 'react';
 import { WORD_LIST } from './word';
 
 const SOLUTIONS = WORD_LIST.filter(w => w.length === 5);
-const getRandomWord = () =>
-  SOLUTIONS[Math.floor(Math.random() * SOLUTIONS.length)].toUpperCase();
+const getRandomWord = () => SOLUTIONS[Math.floor(Math.random() * SOLUTIONS.length)].toUpperCase();
 
 function App() {
   const [user, setUser] = useState(null);
@@ -21,7 +20,6 @@ function App() {
   const [error, setError] = useState('');
   const [timer, setTimer] = useState(0);
   const timerRef = useRef(null);
-  const boardRef = useRef(null);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('wordleUser');
@@ -30,9 +28,7 @@ function App() {
 
   useEffect(() => {
     if (gameStarted && gameStatus === 'playing') {
-      timerRef.current = setInterval(() => {
-        setTimer(t => t + 1);
-      }, 1000);
+      timerRef.current = setInterval(() => setTimer(t => t + 1), 1000);
     } else {
       clearInterval(timerRef.current);
     }
@@ -40,16 +36,15 @@ function App() {
   }, [gameStarted, gameStatus]);
 
   useEffect(() => {
-    if (!gameStarted) return;
+    if (!gameStarted || gameStatus !== 'playing') return;
     const handleKeyDown = (e) => {
-      if (gameStatus !== 'playing') return;
       if (e.key === 'Enter') onEnter();
       else if (e.key === 'Backspace') onDelete();
       else if (/^[a-zA-Z]$/.test(e.key)) onChar(e.key.toUpperCase());
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameStatus, currentGuess, guesses, gameStarted]);
+  }, [currentGuess, guesses, gameStatus, gameStarted]);
 
   const onLogin = (username) => {
     localStorage.setItem('wordleUser', username);
@@ -64,15 +59,16 @@ function App() {
   };
 
   const onChar = (char) => {
-    if (gameStatus !== 'playing' || currentGuess.length >= 5) return;
-    setCurrentGuess((prev) => (prev + char).slice(0, 5));
-    setError('');
+    if (currentGuess.length < 5 && gameStatus === 'playing') {
+      setCurrentGuess(prev => prev + char);
+      setError('');
+    }
   };
 
   const onDelete = () => {
-    if (gameStatus !== 'playing') return;
-    setCurrentGuess((prev) => prev.slice(0, -1));
-    setError('');
+    if (gameStatus === 'playing') {
+      setCurrentGuess(prev => prev.slice(0, -1));
+    }
   };
 
   const onEnter = () => {
@@ -83,19 +79,19 @@ function App() {
       return;
     }
 
-    const guessUpper = currentGuess.toUpperCase();
+    const upperGuess = currentGuess.toUpperCase();
 
-    if (!WORD_LIST.includes(guessUpper)) {
+    if (!WORD_LIST.includes(upperGuess)) {
       setError('Not in word list');
       return;
     }
 
-    const newGuesses = [...guesses, guessUpper];
+    const newGuesses = [...guesses, upperGuess];
     setGuesses(newGuesses);
     setCurrentGuess('');
     setError('');
 
-    if (guessUpper === solution.toUpperCase()) {
+    if (upperGuess === solution) {
       setGameStatus('won');
     } else if (newGuesses.length >= 6) {
       setGameStatus('lost');
@@ -107,48 +103,40 @@ function App() {
     setGuesses([]);
     setCurrentGuess('');
     setGameStatus('playing');
-    setError('');
     setTimer(0);
+    setError('');
   };
 
+  // Screens
   if (!user) return <Login onLogin={onLogin} />;
-  if (!gameStarted) return <Landing onStart={() => { setGameStarted(true); setTimer(0); }} />;
-  if (gameStatus === 'won' || gameStatus === 'lost') {
+  if (!gameStarted) return <Landing onStart={() => setGameStarted(true)} />;
+  if (gameStatus !== 'playing') {
     return (
       <Ending
         won={gameStatus === 'won'}
         guesses={guesses}
         time={timer}
-        onRestart={onRestart}
         solution={solution}
+        onRestart={onRestart}
       />
     );
   }
 
+  // Main Game UI
   return (
-    <div className="app-container" ref={boardRef}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 className="title" style={{ border: 'none', margin: 0 }}>Wordle</h1>
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: '0.9rem', color: '#818384' }}>{user}</div>
-          <button
-            onClick={onLogout}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#b59f3b',
-              cursor: 'pointer',
-              padding: 0,
-              fontSize: '0.9rem'
-            }}
-          >
-            Logout
-          </button>
-        </div>
-      </header>
+    <div className="app-container">
+      <header className="title">Wordle</header>
 
-      <div style={{ fontSize: '1.1rem', margin: '8px 0', color: '#b59f3b' }}>
-        Time: {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        color: '#b59f3b',
+        marginBottom: '0.5rem',
+        fontSize: '1rem',
+      }}>
+        <span>👋 Hello, <strong>{user}</strong></span>
+        <span>⏱️ Time: {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}</span>
       </div>
 
       <WordleBoard
@@ -167,9 +155,13 @@ function App() {
 
       {error && <div className="error">{error}</div>}
 
-      {/* Debug: reveal solution */}
-      <div style={{ color: '#888', fontSize: '0.8rem', marginTop: '1rem' }}>
-      </div>
+      <button
+        onClick={onLogout}
+        className="restart-btn"
+        style={{ marginTop: '1.5rem', background: '#8b0000' }}
+      >
+        Logout
+      </button>
     </div>
   );
 }
