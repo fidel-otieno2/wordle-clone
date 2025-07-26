@@ -16,7 +16,7 @@ function WordleBoard({ guesses, currentGuess, solution }) {
     <div className="board">
       {rows.map((word, rowIndex) => (
         <div className="board-row" key={rowIndex}>
-          {[...Array(5)].map((_, colIndex) => (
+           {[...Array(5)].map((_, colIndex) => (
             <Tile
               key={colIndex}
               value={word[colIndex] || ''}
@@ -29,7 +29,7 @@ function WordleBoard({ guesses, currentGuess, solution }) {
   );
 }
 
-// Determines tile color for each letter
+// Determining tile color for each letter
 function getStatus(word, idx, solution, isSubmitted) {
   if (!isSubmitted || !word) return '';
 
@@ -41,15 +41,15 @@ function getStatus(word, idx, solution, isSubmitted) {
   const statusArr = Array(5).fill('absent');
   const solUsed = Array(5).fill(false);
 
-  // 1st pass: check for correct letters
+  // 1st pass: checking for correct letters
   for (let i = 0; i < 5; i++) {
     if (guessArr[i] === solArr[i]) {
       statusArr[i] = 'correct';
       solUsed[i] = true;
     }
   }
-
-  // 2nd pass: check for present letters
+  
+  // 2nd pass: checking for present letters
   for (let i = 0; i < 5; i++) {
     if (statusArr[i] === 'correct') continue;
     for (let j = 0; j < 5; j++) {
