@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import Tile from './Tile';
 import '../styles/WordleBoard.css';
@@ -65,3 +66,5 @@ function getStatus(word, idx, solution, isSubmitted) {
 }
 
 export default WordleBoard;
+=======
+>>>>>>> origin/abdi
