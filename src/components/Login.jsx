@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Login({ onLogin }) {
+ function Login({ onLogin }) {
   const [username, setUsername] = useState('');
 
   const handleSubmit = (e) => {
@@ -41,3 +41,4 @@ export default function Login({ onLogin }) {
     </div>
   );
 }
+export default Login;
